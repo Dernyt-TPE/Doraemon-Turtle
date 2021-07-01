@@ -1,10 +1,21 @@
 from turtle import *
+from threading import Thread
+#Run 'pip install playsound2' on terminal to install the package
+try:
+    from playsound2 import playsound
+except:
+    print("'playsound2' package not found")
 
 def my_goto(x, y):
     penup()
     goto(x, y)
     pendown()
 
+def sound():
+    try:
+        playsound('assets\Doraemon Theme (Hindi).mp3')
+    except:
+        print('Cannot play background music..')
 
 def eyes():
     fillcolor("#ffffff")
@@ -315,8 +326,17 @@ if __name__ == '__main__':
     screensize(1400,1000, "#f0f0f0")
     title('Doraemon made by Saksham Aggarwal')
     pensize(3)  
-    speed(9)    
-    Doraemon()
+    
+    #reducing speed to match with the soundtrack
+    #speed(9)
+    speed(3)
+    #to run two functions at same time
+    try:
+        Thread(target=sound).start()
+    except:
+        pass
+    Thread(target=Doraemon()).start()
+    
     my_goto(100, -300)
     write('Do Follow Devansh Tayal', font=("Italian", 20, "bold"))
     mainloop()
